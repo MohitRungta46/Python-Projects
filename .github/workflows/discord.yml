@@ -8,9 +8,11 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Discord
+      - name: Send Clean Discord Notification
         run: |
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d '{"content": "@everyone New push to main!"}' \
+               -d '{
+                 "content": "@everyone 🎉 **New project update is out!**\n> 💡 **Commit:** \"${{ github.event.head_commit.message }}\"\n> 👤 **Pushed by:** `${{ github.actor }}`\n\n🔗 [Click here to view the latest code](${{ github.event.head_commit.url }})"
+               }' \
                ${{ secrets.DISCORD_WEBHOOK }}
